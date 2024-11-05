@@ -48,29 +48,15 @@ const renderEntries = () => {
     const display = document.querySelector('#entryDisplay');
     display.innerHTML = '';
     entries.forEach((entry) => {
-        const button = document.createElement('button');
-        const buttonText = document.createTextNode('Delete');
-        button.appendChild(buttonText);
-        button.addEventListener('click', deleteRequest);
         const row = document.createElement('tr');
         row.appendChild(createCell(entry.id));
         row.appendChild(createCell(new Date(entry.checkIn).toLocaleString()));
         row.appendChild(createCell(new Date(entry.checkOut).toLocaleString()));
-        row.appendChild(button);
         display.appendChild(row);
     });
 };
-const deleteRequest = (e) => {
-    const entryId = e.target.parentElement.firstChild.innerText;
-    fetch(`${URL}/entries/${entryId}`, {
-        method: 'DELETE'
-    }).then((result) => {
-        entries = entries.filter((entry) => entry.id !== entryId);
-        indexEntries();
-    });
-};
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function(){
     const createEntryForm = document.querySelector('#createEntryForm');
     createEntryForm.addEventListener('submit', createEntry);
     indexEntries();
